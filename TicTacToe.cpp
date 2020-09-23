@@ -183,3 +183,30 @@ int checkWin(){
   }
  return 0; //nobody won
 }
+
+//if everything is filled, returns true. else returns false
+bool checkBoardFill(){
+  if(
+     board[0][0] != BLANK &&
+     board[1][0] != BLANK &&
+     board[2][0] != BLANK &&
+     board[0][1] != BLANK &&
+     board[0][2] != BLANK &&
+     board[1][1] != BLANK &&
+     board[1][2] != BLANK &&
+     board[2][1] != BLANK &&
+     board[2][2] != BLANK) {
+    return true; //board is completely filled
+  }
+  else {
+    return false; //board not completely filled
+  }
+}
+
+//a tie occurs when board is filled and nobody has won
+bool checkTie(){
+  if ((checkBoardFill() == true) && (Win() == 0)){
+    return true;
+  }
+  return false;
+}
