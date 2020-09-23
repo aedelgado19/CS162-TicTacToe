@@ -18,8 +18,8 @@ bool checkBoardFill();
 bool checkTie();
 
 int main() {
-
-  //print out board format
+  
+  //game variables
   int board[3][3];
   int winner = 0;
   const int BLANK = 0;
@@ -32,12 +32,13 @@ int main() {
   int turn = X_TURN;
   bool stillPlaying = true;
   bool successfulMove = false;
-  char str[2];
+  char str[2]; //user move
   
   //main gameplay 
   cout << "Welcome to TicTacToe!" << endl;
   cout << "Remember, enter your move in the letter then" << endl;
   cout << " number format. (ex a3 or b1)" << endl;
+
   resetBoard();
   turn = X_TURN;
   while (checkWin == 0 && checkTie == false){
@@ -126,18 +127,16 @@ int main() {
 
 //set up board
 void printBoard(){
-  cout << " \t1\t2\t3" << endl;
-
-  //print row
-  for (int r = 0; r < strlen(board); r++){ //ALLY THIS MAY NOT BE RIGHT!!!
-    //COME BACK AND DO THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-  }
-
-
+  cout << " 1 2 3" << endl;
+  cout << "a " << board[2][0] << " " << board[2][1] << " " << board[2][2] << endl;
+  cout << "b " << board[1][0] << " " << board[1][1] << " " << board[1][2] << endl;
+  cout << "c " << board[0][0] << " " << board[0][1] << " " << board[0][2] << endl;
+  
 }
 
 //set all spaces to blank
 void resetBoard(){
+  
   board[0][0] = BLANK;
   board[1][0] = BLANK;
   board[2][0] = BLANK;
@@ -186,6 +185,8 @@ int checkWin(){
 
 //if everything is filled, returns true. else returns false
 bool checkBoardFill(){
+
+  // BUGGYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY bc there's no pointers!
   if(
      board[0][0] != BLANK &&
      board[1][0] != BLANK &&
