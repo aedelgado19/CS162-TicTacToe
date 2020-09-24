@@ -18,12 +18,12 @@ void printBoard(int board[ROWS][COLS]);
 void resetBoard(int board[ROWS][COLS]);
 int checkWin(int board[ROWS][COLS]);
 bool checkBoardFill(int board[ROWS][COLS]);
-bool checkTie();
+bool checkTie(int board[ROWS][COLS]);
 
 int main() {
   
   //game variables
-  int board[3][3];
+  int board[ROWS][COLS];
   int winner = 0;
   const int X_MOVE = 1;
   const int O_MOVE = 2;
@@ -34,29 +34,30 @@ int main() {
   int turn = X_TURN;
   bool stillPlaying = true;
   bool successfulMove = false;
-  char str[2]; //user move
+  char str[3]; //user move
   
   //main gameplay 
   cout << "Welcome to TicTacToe!" << endl;
   cout << "Remember, enter your move in the letter then" << endl;
   cout << " number format. (ex a3 or b1)" << endl;
 
-  resetBoard(board[ROWS][COLS]);
+  resetBoard(board);
   turn = X_TURN;
-  while (checkWin() == 0 && checkTie() == false){
+  while (checkWin(board) == 0 && checkTie(board) == false){
     successfulMove = false;
-    printBoard(board[ROWS][COLS]);
+    printBoard(board);
     cout << "Enter a move: " << endl;
-    cin.get(str, 2); //gets user's choice move
-
+    cin.get(str, 3); //gets user's choice move
+    cin.get();
+    
     //check legality
-    if (strlen(str) != 2){ //input has to be 2 characters
+    if (strlen(str) != 3){ //input has to be 2 characters and null
       cout << "Please enter a letter followed by a number. (ex a1)" << endl;
     }
     else if (str[0] != 'a' || str[0] != 'b' || str[0] != 'c'){ //check letter
       cout << "Row can only be a, b, or c." << endl;
     }
-    else if (str[0] != '1' || str[0] != '2' || str[0] != '3'){ //check num
+    else if (str[1] != '1' || str[1] != '2' || str[1] != '3'){ //check num
       cout << "Column can only be 1, 2, or 3." << endl;
     }
     else { //otherwise it is legal
@@ -97,16 +98,16 @@ int main() {
   char playAgain = 'y';
 
   //if x, win = 1. if O, win = 2. If nobody wins or a tie, win = 0
-  if (checkWin(board[ROWS][COLS]) == 0){ //game tie
+  if (checkWin(board) == 0){ //game tie
     cout << "Tie!" << endl;
   }
-  else if (checkWin() == 1){ //x win
+  else if (checkWin(board) == 1){ //x win
     cout << "X wins!" << endl;
     xWins += 1; //increment num of wins
     cout << "Amount of X wins: " << xWins << endl;
     cout << "Amount of O wins: " << oWins << endl;
   }
-  else if (checkWin(board[ROWS][COLS]) == 2){ //o win
+  else if (checkWin(board) == 2){ //o win
     cout << "O wins!" << endl;
     oWins += 1; //increment num of wins
     cout << "Amount of X wins: " << xWins << endl;
@@ -115,7 +116,7 @@ int main() {
 
   //play again?
   cout << "Do you want to play again? (Y/N)" << endl;
-  cin << playAgain;
+  cin >> playAgain;
   if (playAgain == 'Y' || playAgain == 'y'){
     stillPlaying = true;
   }
@@ -203,8 +204,8 @@ bool checkBoardFill(int board[ROWS][COLS]){
 }
 
 //a tie occurs when board is filled and nobody has won
-bool checkTie(){
-  if ((checkBoardFill(board[ROWS][COLS]) == true) && (checkWin(board[ROWS][COLS]) == 0)){
+bool checkTie(int board[ROWS][COLS]){
+  if ((checkBoardFill(board) == true) && (checkWin(board) == 0)){
     return true;
   }
   return false;
