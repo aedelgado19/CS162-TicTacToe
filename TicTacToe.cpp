@@ -10,11 +10,14 @@
 #include <cstring>
 using namespace std;
 
+#define BLANK 0
+#define ROWS 3
+#define COLS 3
 //functions
-void printBoard();
-void resetBoard();
-int checkWin();
-bool checkBoardFill();
+void printBoard(int board[ROWS][COLS]);
+void resetBoard(int board[ROWS][COLS]);
+int checkWin(int board[ROWS][COLS]);
+bool checkBoardFill(int board[ROWS][COLS]);
 bool checkTie();
 
 int main() {
@@ -22,7 +25,6 @@ int main() {
   //game variables
   int board[3][3];
   int winner = 0;
-  const int BLANK = 0;
   const int X_MOVE = 1;
   const int O_MOVE = 2;
   const int X_TURN = 0;
@@ -39,11 +41,11 @@ int main() {
   cout << "Remember, enter your move in the letter then" << endl;
   cout << " number format. (ex a3 or b1)" << endl;
 
-  resetBoard();
+  resetBoard(board[ROWS][COLS]);
   turn = X_TURN;
-  while (checkWin == 0 && checkTie == false){
+  while (checkWin() == 0 && checkTie() == false){
     successfulMove = false;
-    printBoard();
+    printBoard(board[ROWS][COLS]);
     cout << "Enter a move: " << endl;
     cin.get(str, 2); //gets user's choice move
 
@@ -95,7 +97,7 @@ int main() {
   char playAgain = 'y';
 
   //if x, win = 1. if O, win = 2. If nobody wins or a tie, win = 0
-  if (checkWin() == 0){ //game tie
+  if (checkWin(board[ROWS][COLS]) == 0){ //game tie
     cout << "Tie!" << endl;
   }
   else if (checkWin() == 1){ //x win
@@ -104,7 +106,7 @@ int main() {
     cout << "Amount of X wins: " << xWins << endl;
     cout << "Amount of O wins: " << oWins << endl;
   }
-  else if (checkWin() == 2){ //o win
+  else if (checkWin(board[ROWS][COLS]) == 2){ //o win
     cout << "O wins!" << endl;
     oWins += 1; //increment num of wins
     cout << "Amount of X wins: " << xWins << endl;
@@ -119,14 +121,12 @@ int main() {
   }
   if (playAgain == 'N' || playAgain == 'n'){
     stillPlaying = false;
-  }
-  //ALLY YOU MIGHT BE MISSING A CLOSING BRACKET HEREEEEEEEEEEEEE
-  
+  } 
   return 0;
 }
 
 //set up board
-void printBoard(){
+void printBoard(int board[ROWS][COLS]){
   cout << " 1 2 3" << endl;
   cout << "a " << board[2][0] << " " << board[2][1] << " " << board[2][2] << endl;
   cout << "b " << board[1][0] << " " << board[1][1] << " " << board[1][2] << endl;
@@ -135,7 +135,7 @@ void printBoard(){
 }
 
 //set all spaces to blank
-void resetBoard(){
+void resetBoard(int board[ROWS][COLS]){
   
   board[0][0] = BLANK;
   board[1][0] = BLANK;
@@ -153,7 +153,7 @@ void resetBoard(){
  * outputs: 0,1,2 where 0 = no win, 1 = X win, 2 = O win
  */
 
-int checkWin(){
+int checkWin(int board[ROWS][COLS]){
   for (int i = 0; i <= 2; i++){
     if(board[0][0] == i && board[0][1] == i && board[0][2] == i){
       return i;
@@ -184,9 +184,7 @@ int checkWin(){
 }
 
 //if everything is filled, returns true. else returns false
-bool checkBoardFill(){
-
-  // BUGGYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY bc there's no pointers!
+bool checkBoardFill(int board[ROWS][COLS]){
   if(
      board[0][0] != BLANK &&
      board[1][0] != BLANK &&
@@ -206,8 +204,9 @@ bool checkBoardFill(){
 
 //a tie occurs when board is filled and nobody has won
 bool checkTie(){
-  if ((checkBoardFill() == true) && (Win() == 0)){
+  if ((checkBoardFill(board[ROWS][COLS]) == true) && (checkWin(board[ROWS][COLS]) == 0)){
     return true;
   }
   return false;
 }
+
