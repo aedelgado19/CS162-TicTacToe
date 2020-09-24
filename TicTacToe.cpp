@@ -51,52 +51,54 @@ int main() {
     cin.get();
     
     //check legality
-    if (strlen(str) != 3){ //input has to be 2 characters and null
+    if (strlen(str) != 2){ //input has to be 2 characters and null
       cout << "Please enter a letter followed by a number. (ex a1)" << endl;
-    }
-    else if (str[0] != 'a' || str[0] != 'b' || str[0] != 'c'){ //check letter
-      cout << "Row can only be a, b, or c." << endl;
-    }
-    else if (str[1] != '1' || str[1] != '2' || str[1] != '3'){ //check num
-      cout << "Column can only be 1, 2, or 3." << endl;
-    }
-    else { //otherwise it is legal
-      int row = str[0] - 'a';
-      int column = str[1] - '1';
-
-      //successful X move!
-      if ((turn == X_TURN) && (board[row][column] == BLANK)){
-	board[row][column] = X_MOVE;
-	successfulMove = true;
-      }
-      //if there is already a piece there...
-      else if ((turn == X_TURN) && (board[row][column] != BLANK)){
-	cout << "There is already a piece there." << endl;
-      }
-      //successful O move!
-      if ((turn == O_TURN) && (board[row][column] == BLANK)){
-	board[row][column] = O_MOVE;
-	successfulMove = true;
-      }
-
-      //if there is already a piece there...
-      else if ((turn == O_TURN) && (board[row][column] != BLANK)) {
-	cout << "There is already a piece there." << endl;
-      }
-
-      //swap turns
-      if (turn == O_TURN && successfulMove == true){
-	turn = X_TURN;
-      }
-      else if (turn == X_TURN && successfulMove == true){
-	turn = O_TURN;
+      cout << "strlen is " << strlen(str) << endl;
+    } else {
+      if ((str[0] != 'a') && (str[0] != 'b') && (str[0] != 'c')){ //check letter
+	cout << "Row can only be a, b, or c." << endl;
+      } else {
+	if (str[1] != '1' && str[1] != '2' && str[1] != '3'){ //check num
+	  cout << "Column can only be 1, 2, or 3." << endl;
+	} else { 
+	  int row = str[0] - 'a';
+	  int column = str[1] - '1';
+	  
+	  //successful X move!
+	  if ((turn == X_TURN) && (board[row][column] == BLANK)){
+	    board[row][column] = X_MOVE;
+	    successfulMove = true;
+	  }
+	  //if there is already a piece there...
+	  else if ((turn == X_TURN) && (board[row][column] != BLANK)){
+	    cout << "There is already a piece there." << endl;
+	  }
+	  //successful O move!
+	  if ((turn == O_TURN) && (board[row][column] == BLANK)){
+	    board[row][column] = O_MOVE;
+	    successfulMove = true;
+	  }
+	  
+	  //if there is already a piece there...
+	  else if ((turn == O_TURN) && (board[row][column] != BLANK)) {
+	    cout << "There is already a piece there." << endl;
+	  }
+	  
+	  //swap turns
+	  if (turn == O_TURN && successfulMove == true){
+	    turn = X_TURN;
+	  }
+	  else if (turn == X_TURN && successfulMove == true){
+	    turn = O_TURN;
+	  }
+	}
       }
     }
   }// end while loop
 
   //winning statements
   char playAgain = 'y';
-
+  
   //if x, win = 1. if O, win = 2. If nobody wins or a tie, win = 0
   if (checkWin(board) == 0){ //game tie
     cout << "Tie!" << endl;
