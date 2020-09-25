@@ -103,6 +103,8 @@ int main() {
     //if x, win = 1. if O, win = 2. If nobody wins or a tie, win = 0
     if (checkWin(board) == 0){ //game tie
       cout << "Tie!" << endl;
+      cout << "Amount of X wins: " << xWins << endl;
+      cout << "Amount of O wins: " << oWins << endl;
     }
     else if (checkWin(board) == 1){ //x win
       cout << "X wins!" << endl;
