@@ -35,98 +35,101 @@ int main() {
   bool stillPlaying = true;
   bool successfulMove = false;
   char str[3]; //user move
-  
-  //main gameplay 
-  cout << "Welcome to TicTacToe!" << endl;
-  cout << "Remember, enter your move in the letter then" << endl;
-  cout << " number format. (ex a3 or b1)" << endl;
 
-  resetBoard(board);
-  turn = X_TURN;
-  while (checkWin(board) == 0 && checkTie(board) == false){
-    successfulMove = false;
-    printBoard(board);
-    cout << "Enter a move: " << endl;
-    cin.get(str, 3); //gets user's choice move
-    cin.get();
+  while (stillPlaying == true){
+    //main gameplay 
+    cout << "Welcome to TicTacToe!" << endl;
+    cout << "Remember, enter your move in the letter then" << endl;
+    cout << " number format. (ex a3 or b1)" << endl;
+
+    resetBoard(board);
+    turn = X_TURN;
+    while (checkWin(board) == 0 && checkTie(board) == false){
+      successfulMove = false;
+      printBoard(board);
+      cout << "Enter a move: " << endl;
+      cin.get(str, 3); //gets user's choice move
+      cin.get();
     
-    //check legality
-    if (strlen(str) != 2){ //input has to be 2 characters and null
-      cout << "Please enter a letter followed by a number. (ex a1)" << endl;
-      cout << "strlen is " << strlen(str) << endl;
-    } else {
-      if ((str[0] != 'a') && (str[0] != 'b') && (str[0] != 'c')){ //check letter
-	cout << "Row can only be a, b, or c." << endl;
+      //check legality
+      if (strlen(str) != 2){ //input has to be 2 characters and null
+	cout << "Please enter a letter followed by a number. (ex a1)" << endl;
       } else {
-	if (str[1] != '1' && str[1] != '2' && str[1] != '3'){ //check num
-	  cout << "Column can only be 1, 2, or 3." << endl;
-	} else { 
-	  int row = str[0] - 'a';
-	  int column = str[1] - '1';
+	if ((str[0] != 'a') && (str[0] != 'b') && (str[0] != 'c')){ //check letter
+	  cout << "Row can only be a, b, or c." << endl;
+	} else {
+	  if (str[1] != '1' && str[1] != '2' && str[1] != '3'){ //check num
+	    cout << "Column can only be 1, 2, or 3." << endl;
+	  } else { 
+	    int row = str[0] - 'a';
+	    int column = str[1] - '1';
 	  
-	  //successful X move!
-	  if ((turn == X_TURN) && (board[row][column] == BLANK)){
-	    board[row][column] = X_MOVE;
-	    successfulMove = true;
-	  }
-	  //if there is already a piece there...
-	  else if ((turn == X_TURN) && (board[row][column] != BLANK)){
-	    cout << "There is already a piece there." << endl;
-	  }
-	  //successful O move!
-	  if ((turn == O_TURN) && (board[row][column] == BLANK)){
-	    board[row][column] = O_MOVE;
-	    successfulMove = true;
-	  }
+	    //successful X move!
+	    if ((turn == X_TURN) && (board[row][column] == BLANK)){
+	      board[row][column] = X_MOVE;
+	      successfulMove = true;
+	    }
+	    //if there is already a piece there...
+	    else if ((turn == X_TURN) && (board[row][column] != BLANK)){
+	      cout << "There is already a piece there." << endl;
+	    }
+	    //successful O move!
+	    if ((turn == O_TURN) && (board[row][column] == BLANK)){
+	      board[row][column] = O_MOVE;
+	      successfulMove = true;
+	    }
 	  
-	  //if there is already a piece there...
-	  else if ((turn == O_TURN) && (board[row][column] != BLANK)) {
-	    cout << "There is already a piece there." << endl;
-	  }
+	    //if there is already a piece there...
+	    else if ((turn == O_TURN) && (board[row][column] != BLANK)) {
+	      cout << "There is already a piece there." << endl;
+	    }
 	  
-	  //swap turns
-	  if (turn == O_TURN && successfulMove == true){
-	    turn = X_TURN;
-	  }
-	  else if (turn == X_TURN && successfulMove == true){
-	    turn = O_TURN;
+	    //swap turns
+	    if (turn == O_TURN && successfulMove == true){
+	      cout << "X turn" << endl;
+	      turn = X_TURN;
+	    }
+	    else if (turn == X_TURN && successfulMove == true){
+	      cout << "O turn" << endl;
+	      turn = O_TURN;
+	    }
 	  }
 	}
       }
     }
-  }// end while loop
-
-  //winning statements
-  char playAgain = 'y';
-  
-  //if x, win = 1. if O, win = 2. If nobody wins or a tie, win = 0
-  if (checkWin(board) == 0){ //game tie
-    cout << "Tie!" << endl;
-  }
-  else if (checkWin(board) == 1){ //x win
-    cout << "X wins!" << endl;
-    xWins += 1; //increment num of wins
-    cout << "Amount of X wins: " << xWins << endl;
-    cout << "Amount of O wins: " << oWins << endl;
-  }
-  else if (checkWin(board) == 2){ //o win
-    cout << "O wins!" << endl;
-    oWins += 1; //increment num of wins
-    cout << "Amount of X wins: " << xWins << endl;
-    cout << "Amount of O wins: " << oWins << endl;
-  }
-
-  //play again?
-  cout << "Do you want to play again? (Y/N)" << endl;
-  cin >> playAgain;
-  if (playAgain == 'Y' || playAgain == 'y'){
-    stillPlaying = true;
-  }
-  if (playAgain == 'N' || playAgain == 'n'){
-    stillPlaying = false;
-  } 
+    //winning statements
+    char playAgain = 'y';
+    
+    //if x, win = 1. if O, win = 2. If nobody wins or a tie, win = 0
+    if (checkWin(board) == 0){ //game tie
+      cout << "Tie!" << endl;
+    }
+    else if (checkWin(board) == 1){ //x win
+      cout << "X wins!" << endl;
+      xWins += 1; //increment num of wins
+      cout << "Amount of X wins: " << xWins << endl;
+      cout << "Amount of O wins: " << oWins << endl;
+    }
+    else if (checkWin(board) == 2){ //o win
+      cout << "O wins!" << endl;
+      oWins += 1; //increment num of wins
+      cout << "Amount of X wins: " << xWins << endl;
+      cout << "Amount of O wins: " << oWins << endl;
+    }
+    //play again?
+    cout << "Do you want to play again? (Y/N)" << endl;
+    cin >> playAgain;
+    cin.get();
+    if (playAgain == 'Y' || playAgain == 'y'){
+      stillPlaying = true;
+    }
+    if (playAgain == 'N' || playAgain == 'n'){
+      stillPlaying = false;
+    } 
+  }//end stillPlaying
   return 0;
-}
+}//end int main()
+
 
 //set up board
 void printBoard(int board[ROWS][COLS]){
@@ -150,7 +153,7 @@ void printBoard(int board[ROWS][COLS]){
 	counter++;
       }
     }
-    cout << output[0] << " " << output[1] << " " << output[2] << output[3] << endl;
+    cout << output[0] << " " << output[1] << " " << output[2] << " " << output[3] << endl;
   }
 }
 
@@ -174,29 +177,29 @@ void resetBoard(int board[ROWS][COLS]){
  */
 
 int checkWin(int board[ROWS][COLS]){
-  for (int i = 0; i <= 2; i++){
-    if(board[0][0] == i && board[0][1] == i && board[0][2] == i){
+  for (int i = 1; i <= 2; i++){
+    if(board[0][0] == i && board[0][1] == i && board[0][2] == i){ //top row across
       return i;
     }
-    if(board[0][0] == i && board[1][1] == i && board[2][2] == i){
+    if(board[0][0] == i && board[1][1] == i && board[2][2] == i){ //diagonal top L to bottom R
       return i;
     }
-    if(board[0][2] == i && board[1][1] == i && board[2][0] == i){
+    if(board[0][2] == i && board[1][1] == i && board[2][0] == i){ //diagonal top R to bottom L
       return i;
     }
-    if(board[0][2] == i && board[1][2] == i && board[2][2] == i){
+    if(board[0][2] == i && board[1][2] == i && board[2][2] == i){ //right column down
       return i;
     }
-    if(board[1][0] == i && board[1][1] == i && board[1][2] == i){
+    if(board[1][0] == i && board[1][1] == i && board[1][2] == i){ //middle row across
       return i;
     }
-    if(board[2][0] == i && board[2][1] == i && board[2][2] == i){
+    if(board[2][0] == i && board[2][1] == i && board[2][2] == i){ //bottom row across
       return i;
     }
-    if(board[0][0] == i && board[1][0] == i && board[2][0] == i){
+    if(board[0][0] == i && board[1][0] == i && board[2][0] == i){ //left column down
       return i;
     }
-    if(board[0][1] == i && board[1][1] == i && board[2][1] == i){
+    if(board[0][1] == i && board[1][1] == i && board[2][1] == i){ //middle row down
       return i;
     }
   }
