@@ -130,43 +130,28 @@ int main() {
 
 //set up board
 void printBoard(int board[ROWS][COLS]){
-  cout << " 1 2 3" << endl;
-  
+  cout << "  1 2 3" << endl;
+  char output[4];
+   
   for (int i = 0; i < 3; i++){ //print out letters in column
-    char output[3];
+    int counter = 0;
     output[0] = ('a'+i);
-    output[1] = 32; //32 is a space
-    output[2] = '\0';
-
-    //print out X and O if X or O plays a move
+    counter++;
+    
     for (int j = 0; j < 3; j++){
-      if(board[i][j] == BLANK){
-	output[0] = 32;
-	output[1] = 32;
-	output[2] = '\0';
-      }
-
-      //display X move
-      else if (board[i][j] == X_MOVE){
-	output[0] = 'X';
-	output[1] = 32;
-	output[2] = '\0';
-      }
-
-      //display Y move 
-      else if (board[i][j] == O_MOVE){
-	output[0] = 'O';
-	output[1] = 32;
-	output[2] = '\0';
+      if (board[i][j] == X_MOVE){
+	output[counter] = 'X';
+	counter++;
+      } else if (board[i][j] == O_MOVE){
+	output[counter] = 'O';
+	counter++;
+      } else if (board[i][j] == BLANK){
+	output[counter] = ' ';
+	counter++;
       }
     }
-    cout << output[0] << endl;
-    cout << output[1] << endl;
-    cout << output[2] << endl;
+    cout << output[0] << " " << output[1] << " " << output[2] << output[3] << endl;
   }
-
-
-  
 }
 
 //set all spaces to blank
