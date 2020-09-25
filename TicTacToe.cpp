@@ -1,5 +1,5 @@
 /* Author: Allison Delgado
- * Last updated: 9/22/20
+ * Last updated: 9/24/20
  * TicTacToe is a command line game of the classic TTT. 
  * Note: This program's algorithm is similar Delgado's TTT
  * program in Java created October 2019
@@ -13,6 +13,8 @@ using namespace std;
 #define BLANK 0
 #define ROWS 3
 #define COLS 3
+#define X_MOVE 1
+#define O_MOVE 2
 //functions
 void printBoard(int board[ROWS][COLS]);
 void resetBoard(int board[ROWS][COLS]);
@@ -25,8 +27,6 @@ int main() {
   //game variables
   int board[ROWS][COLS];
   int winner = 0;
-  const int X_MOVE = 1;
-  const int O_MOVE = 2;
   const int X_TURN = 0;
   const int O_TURN = 1;
   int xWins = 0;
@@ -131,9 +131,41 @@ int main() {
 //set up board
 void printBoard(int board[ROWS][COLS]){
   cout << " 1 2 3" << endl;
-  cout << "a " << board[2][0] << " " << board[2][1] << " " << board[2][2] << endl;
-  cout << "b " << board[1][0] << " " << board[1][1] << " " << board[1][2] << endl;
-  cout << "c " << board[0][0] << " " << board[0][1] << " " << board[0][2] << endl;
+  
+  for (int i = 0; i < 3; i++){ //print out letters in column
+    char output[3];
+    output[0] = ('a'+i);
+    output[1] = 32; //32 is a space
+    output[2] = '\0';
+
+    //print out X and O if X or O plays a move
+    for (int j = 0; j < 3; j++){
+      if(board[i][j] == BLANK){
+	output[0] = 32;
+	output[1] = 32;
+	output[2] = '\0';
+      }
+
+      //display X move
+      else if (board[i][j] == X_MOVE){
+	output[0] = 'X';
+	output[1] = 32;
+	output[2] = '\0';
+      }
+
+      //display Y move 
+      else if (board[i][j] == O_MOVE){
+	output[0] = 'O';
+	output[1] = 32;
+	output[2] = '\0';
+      }
+    }
+    cout << output[0] << endl;
+    cout << output[1] << endl;
+    cout << output[2] << endl;
+  }
+
+
   
 }
 
