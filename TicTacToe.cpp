@@ -116,16 +116,26 @@ int main() {
       cout << "Amount of X wins: " << xWins << endl;
       cout << "Amount of O wins: " << oWins << endl;
     }
-    //play again?
-    cout << "Do you want to play again? (Y/N)" << endl;
-    cin >> playAgain;
-    cin.get();
-    if (playAgain == 'Y' || playAgain == 'y'){
-      stillPlaying = true;
+    bool validResponse = false; //used in play again down below
+
+    while (validResponse == false){
+      //play again?
+      cout << "Do you want to play again? (Y/N)" << endl;
+      cin >> playAgain;
+      cin.get();
+      if (playAgain == 'Y' || playAgain == 'y'){
+	stillPlaying = true;
+	validResponse = true;
+      }
+      else if (playAgain == 'N' || playAgain == 'n'){
+	stillPlaying = false;
+	validResponse = true;
+      }
+      else {
+	cout << "That's not a valid answer!" << endl;
+	validResponse = false;
+      }
     }
-    if (playAgain == 'N' || playAgain == 'n'){
-      stillPlaying = false;
-    } 
   }//end stillPlaying
   return 0;
 }//end int main()
