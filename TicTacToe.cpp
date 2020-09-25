@@ -43,13 +43,13 @@ int main() {
     cout << " number format. (ex a3 or b1)" << endl;
 
     resetBoard(board);
-    turn = X_TURN;
+    turn = X_TURN; //start on X's turn always
     while (checkWin(board) == 0 && checkTie(board) == false){
       successfulMove = false;
       printBoard(board);
       cout << "Enter a move: " << endl;
       cin.get(str, 3); //gets user's choice move
-      cin.get();
+      cin.get(); //account for null
     
       //check legality
       if (strlen(str) != 2){ //input has to be 2 characters and null
@@ -60,7 +60,7 @@ int main() {
 	} else {
 	  if (str[1] != '1' && str[1] != '2' && str[1] != '3'){ //check num
 	    cout << "Column can only be 1, 2, or 3." << endl;
-	  } else { 
+	  } else { //it is legal
 	    int row = str[0] - 'a';
 	    int column = str[1] - '1';
 	  
@@ -146,25 +146,26 @@ int main() {
 //set up board
 void printBoard(int board[ROWS][COLS]){
   cout << "  1 2 3" << endl;
-  char output[4];
+  char output[4]; //used to print rows
    
   for (int i = 0; i < 3; i++){ //print out letters in column
     int counter = 0;
-    output[0] = ('a'+i);
+    output[0] = ('a'+i); //increment the letter each iteration (a->b->c)
     counter++;
     
     for (int j = 0; j < 3; j++){
       if (board[i][j] == X_MOVE){
-	output[counter] = 'X';
+	output[counter] = 'X'; //display an X
 	counter++;
       } else if (board[i][j] == O_MOVE){
-	output[counter] = 'O';
+	output[counter] = 'O'; //display an O
 	counter++;
       } else if (board[i][j] == BLANK){
-	output[counter] = ' ';
+	output[counter] = ' '; //display a space
 	counter++;
       }
     }
+    //print out line with proper spacing 
     cout << output[0] << " " << output[1] << " " << output[2] << " " << output[3] << endl;
   }
 }
